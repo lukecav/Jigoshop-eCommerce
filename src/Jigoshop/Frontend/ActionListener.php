@@ -4,6 +4,9 @@ namespace Jigoshop\Frontend;
 
 use Jigoshop\Container;
 use Jigoshop\Exception;
+use Jigoshop\Frontend\Page\Cart;
+use Jigoshop\Frontend\Page\Checkout;
+use Jigoshop\Frontend\Page\Product;
 use WPAL\Wordpress;
 
 /**
@@ -28,7 +31,12 @@ class ActionListener
         $this->di = $di;
         $this->actions = [
             'add-to-cart' => [$this, 'addToCart'],
-            'cancel_order' => [$this, 'cancelOrder']
+            'purchase' => [$this, 'purchase'],
+            'cancel_order' => [$this, 'cancelOrder'],
+            'update-shipping' => [$this, 'updateShipping'],
+            'checkout' => [$this, 'checkout'],
+            'update-cart' => [$this, 'updateCart'],
+            'remove-item' => [$this, 'removeItem'],
         ];
     }
 
@@ -63,5 +71,28 @@ class ActionListener
         if(isset($_REQUEST['action'], $this->actions[$_REQUEST['action']])) {
             call_user_func_array($this->actions[$_REQUEST['action']], [$this->di]);
         }
+    }
+
+    /**
+     * @param Container $di
+     */
+    public function addToCart(Container $di)
+    {
+        
+    }
+
+    /**
+     * @param Container $di
+     */
+    public function purchase(Container $di)
+    {
+        /** @var Checkout  $page */
+        $page = $di->get('jigoshop.page.checkout');
+        $page->action();
+    }
+
+    public function cancelOrder(Container $di)
+    {
+
     }
 }
