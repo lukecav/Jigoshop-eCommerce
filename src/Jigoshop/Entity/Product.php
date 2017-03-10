@@ -460,6 +460,16 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     }
 
     /**
+     * @param int $id Attachment ID.
+     *
+     * @return bool Attachment exists?
+     */
+    public function hasAttachment($id)
+    {
+        return isset($this->attachments[$id]);
+    }
+
+    /**
      * @return array
      */
     public function getCrossSells()
